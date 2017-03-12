@@ -13,6 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+
+Route::post('value', function(Request $request){
+    $data = [
+        'temperature' => $request->get('temperature'),
+        'humidity' => $request->get('humidity'),
+        'home_id' => $request->get('home'),
+    ];
+
+    $value = new \App\Value();
+    $value->fill($data);
+    $value->save();
+
+    return new \Illuminate\Http\JsonResponse($value);
 });
